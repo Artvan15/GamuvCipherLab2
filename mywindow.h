@@ -3,11 +3,10 @@
 
 #include <QtWidgets>
 #include <QFile>
+#include <QRandomGenerator>
 #include <string>
-#include <algorithm>
 #include <vector>
-#include <locale>
-#include <iostream>
+#include <bitset>
 
 class MyWindow : public QDialog
 {
@@ -16,22 +15,23 @@ public:
     MyWindow(QWidget *parent = nullptr);
 private:
     QLabel *label;
+    QLabel *label2;
     QLineEdit *line;
+    size_t lineSize;
+    QLineEdit *gamma;
     QPushButton *okey;
     QPushButton *read;
-    QPushButton *close;
+    QPushButton *random;
     QComboBox *language;
-    QComboBox *cipher;
-    QSpinBox *spinbox;
-    QSlider *slider;
-    std::vector<std::pair<QChar,int>> Lower;
-    std::vector<std::pair<QChar,int>> Upper;
 
-friend QString Ukrainian(QString, unsigned index, unsigned shift);
+
+
 private slots:
     void okEnable(QString);
+    void okEnable2(QString);
     void okPressed();
     void readPressed();
+    void randomPressed();
 signals:
     void Sig(QString);
 
@@ -44,12 +44,12 @@ public:
 private:
     QTextEdit *text;
     QPushButton *write;
-    QPushButton *brute;
 public slots:
     void Message(QString);
     void writePressed();
-    void bruteForce();
 
 };
 
+void gamuv(const QString &, const QString &, QString &);
+QString stringSize(QString, const QString &);
 #endif // MYWINDOW_H

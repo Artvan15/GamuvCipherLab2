@@ -13,6 +13,5 @@ int main(int argc, char *argv[])
     window->show();
 
     QObject::connect(window, SIGNAL(Sig(QString)), inter, SLOT(Message(QString)));
-
     return a.exec();
 }
