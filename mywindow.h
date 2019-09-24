@@ -17,7 +17,6 @@ private:
     QLabel *label;
     QLabel *label2;
     QLineEdit *line;
-    size_t lineSize;
     QLineEdit *gamma;
     QPushButton *okey;
     QPushButton *read;
