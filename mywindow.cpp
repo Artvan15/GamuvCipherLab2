@@ -12,6 +12,11 @@ MyWindow::MyWindow(QWidget *parent) : QDialog(parent), lineSize(0)
     read = new QPushButton("Read");
     language = new QComboBox;
 
+    alphabet.push_back({' ', 0});
+    for(size_t i = 64, j = 1; i != 127; ++i, ++j){
+        alphabet.push_back({static_cast<char>(i), j});
+    }
+
 
     language->addItem("Англійська"); language->addItem("Українська");
 
@@ -105,18 +110,35 @@ QString stringSize(QString gamma, const QString &text){
     return gamma;
 }
 
-void gamuv(const QString &text, const QString &gamma, QString &newText){
+void MyWindow::gamuv(const QString &text, const QString &gamma, QString &newText){
     std::vector<std::bitset<8>> vecG;
     std::vector<std::bitset<8>> vecT;
 
     for(QString::const_iterator itG = gamma.cbegin(), itT = text.cbegin(); itG != gamma.end(); ++itG, ++itT){
-        vecG.push_back(itG->toLatin1());
-        vecT.push_back(itT->toLatin1());
+        size_t num1, num2;
+        bool ind1 = false, ind2 = false;
+        for(auto itAlph = alphabet.cbegin(); itAlph != alphabet.cend() && (!ind1 || !ind2); ++itAlph){
+
+            if(itAlph->first == *itG && !ind1){
+
+                num1 = itAlph->second;
+
+                ind1 = true;
+            }
+            if(itAlph->first == *itT && !ind2){
+                num2 = itAlph->second;
+                qDebug() << itAlph->second << endl;
+                ind2 = true;
+            }
+        }
+
+        vecG.push_back(num1);
+        vecT.push_back(num2);
     }
 
     for(auto itG = vecG.begin(), itT = vecT.begin(); itG != vecG.end(); ++itG, ++itT){
         *itG ^= *itT;
-        newText.append(static_cast<char>(itG->to_ulong()));
+        newText.append(alphabet.at(itG->to_ulong()).first);
     }
 
 }

@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <bitset>
+#include <algorithm>
 
 class MyWindow : public QDialog
 {
@@ -17,14 +18,17 @@ private:
     QLabel *label;
     QLabel *label2;
     QLineEdit *line;
+    size_t lineSize;
     QLineEdit *gamma;
     QPushButton *okey;
     QPushButton *read;
     QPushButton *random;
     QComboBox *language;
 
+    std::vector<std::pair<char, size_t>> alphabet;
 
-
+private:
+    void gamuv(const QString &text, const QString &gamma, QString &newText);
 private slots:
     void okEnable(QString);
     void okEnable2(QString);
